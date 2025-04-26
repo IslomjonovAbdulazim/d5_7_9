@@ -1,6 +1,7 @@
 import 'package:d5_7_9/pages/new_note_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,9 +11,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List notes = [];
+
   @override
   void initState() {
+    load();
     super.initState();
+  }
+
+  void load() async {
+    final db = await SharedPreferences.getInstance();
+    notes = db.getStringList("notes") ?? [];
+    setState(() {});
   }
 
   @override
